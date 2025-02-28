@@ -1,0 +1,260 @@
+html {
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    background: #000;
+    overflow-x: hidden;
+    min-height: 160vh;
+}
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+p{
+    max-width: 30em;
+}
+
+.header-body,
+.stats{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.gauge,
+.action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-body{
+    flex-direction: column;
+    text-align: center;
+    height: 90%;
+    padding: 0 2em;
+}
+.header-body p{
+    margin: 1em auto 3em auto;
+}
+.title{
+    font-size: 3.4em;
+    color: #fff;
+    margin: 0.3em 0;
+}
+.stats{
+    gap: 2em;
+    margin-bottom: 1em;
+}
+.stats > div {
+    width: 10em;
+}
+.stats h2 span {
+    font-size: 0.5em;
+}
+.btn {
+    color: #f9d342;
+    border: 3px #f9d342 solid;
+    padding: 0.6em 0;
+    width: 12em;
+    border-radius: 3em;
+    font-size: 0.9em;
+    transition: 0.3s;
+}
+.btn:hover {
+    background: #f9d342;
+    color: #000;
+}
+.btn-mobile{
+    display: none;
+}
+.arrow {
+    width: 1.4em;
+    animation: arrow 5s ease infinite;
+    cursor: pointer;
+}
+
+.gauge img {
+    width: 3.5em;
+}
+.specs {
+    padding: 0 2em;
+}
+.specs ul {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.specs ul li {
+    padding: 1em 0;
+    border-bottom: 1px #f9d342 solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* General styling for desktop */
+.info-container {
+    display: flex;
+    flex-direction: column; /* Stack the sections vertically */
+    align-items: center; /* Center sections horizontally */
+    gap: 40px; /* Add spacing between the sections */
+    padding: 20px;
+    width: 100%;
+}
+
+.info {
+    display: flex;
+    align-items: center; /* Vertically align content */
+    justify-content: space-between; /* Space between the image and text */
+    gap: 20px; /* Add spacing between the image and text */
+    max-width: 80%; /* Limit the section width */
+    padding: 20px; /* Optional padding */
+    border: 1px solid #f9d342; /* Optional: Add a border for visibility */
+    border-radius: 10px; /* Optional: Rounded corners */
+    background-color: #000; /* Optional: Background color */
+}
+.info h2 {
+    color: #f9d342;
+}
+.info img {
+    width: 40%; /* Adjust image width */
+    max-width: 400px; /* Set a maximum width */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Optional: Rounded corners */
+}
+
+.info div {
+    flex: 1; /* Allow text container to take up remaining space */
+    padding: 10px; /* Add padding inside the text container */
+}
+
+.info h2 {
+    font-size: 1.8rem; /* Adjust heading size */
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.info p {
+    font-size: 1rem; /* Adjust paragraph size */
+    line-height: 1.5; /* Improve readability */
+    text-align: left;
+}
+
+/* Responsive styling for mobile screens */
+@media (max-width: 768px) {
+    .info {
+        flex-direction: column; /* Stack the image and text vertically */
+        align-items: center; /* Center items horizontally */
+        text-align: center; /* Center text for better mobile readability */
+    }
+
+    .info img {
+        width: 100%; /* Make the image full width */
+        max-width: 500px; /* Optional: Limit maximum width */
+        margin-bottom: 20px; /* Add spacing below the image */
+    }
+
+    .info div {
+        padding: 0 10px; /* Adjust padding for smaller screens */
+    }
+
+    .info h2 {
+        font-size: 1.5rem; /* Slightly smaller heading */
+    }
+
+    .info p {
+        font-size: 0.9rem; /* Slightly smaller text size */
+    }
+}
+
+.about {
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically if needed */
+    padding: 20px; /* Add spacing around the section */
+    height: auto; /* Let the section height adjust to the image size */
+    text-align: center; /* Center-align content if there is more in this section */
+}
+
+.about img {
+    max-width: 80%; /* Scale the image to fit within 80% of the container's width */
+    height: auto; /* Maintain the aspect ratio */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add a subtle shadow for depth */
+    object-fit: cover; /* Ensure the image looks good if dimensions are constrained */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth hover effects */
+}
+
+.iframe-video {
+    max-width: 1000px;
+    padding: 4em 2em;
+    margin: 0 auto;
+    text-align: center;
+}
+.iframe-video h2 {
+    color: #f9d342;
+}
+.section {
+    flex-direction: column;
+}
+.action .btn,
+.action p{
+    margin: 0.5em 0;
+}
+.sidebar-open-body {
+    min-height: 100vh;
+    overflow: hidden;
+}
+@keyframes arrow {
+    40% {transform: translateY(0px);}
+    45% {transform: translateY(8px);}
+    55% {transform: translateY(0px);}
+    60% {transform: translateY(8px);}
+    65% {transform: translateY(0px);}
+    100% {transform: translateY(8px);}
+}
+@media screen and (max-width:1200px){
+    .navbar ul {
+        display: none;
+    }
+    .menu-btn-mobile {
+        display: block;
+        cursor: pointer;
+        background: #f9d342;
+        padding: 0.4em 1em;
+        border-radius: 0.7em;
+    }
+}
+@media screen and (max-width:850px){
+    .stats {
+        gap: 0;
+    }
+    .btn-mobile {
+        display: block;
+        margin: 2em auto;
+        max-width: 90vw;
+    }
+    .stats .btn {
+        display: none;
+    }
+    .stats > div {
+        width: initial;
+    }
+    .about-text {
+        position: relative;
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 450px) {
+    html {
+        font-size: 14px;
+    }
+}

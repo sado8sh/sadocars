@@ -1,0 +1,25 @@
+html {
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    background: #000;
+    overflow-x: hidden;
+    min-height: 160vh;
+}
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+p{
+    max-width: 30em;
+}
