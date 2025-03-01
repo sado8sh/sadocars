@@ -29,7 +29,7 @@ Route::post('/cars', [CarController::class, 'store'])->middleware('auth', 'admin
 Route::get('/car/{id}', [CarController::class, 'show'])->name('car.show');
 Route::get('/cars/{id}/edit', [CarController::class, 'edit'])->name('cars.edit')->middleware('auth', 'admin');
 Route::put('/cars/{id}', [CarController::class, 'update'])->name('cars.update')->middleware('auth', 'admin');
-Route::delete('/cars/{id}', [CarController::class, 'destroy'])->name('cars.destroy')->middleware('auth', 'admin');
+Route::delete('/cars/{id}/delete', [CarController::class, 'destroy'])->name('cars.destroy')->middleware('auth', 'admin');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);

@@ -22,6 +22,8 @@
         <span class="bx bx-x"></span>
     </div>
     <ul>
+    <ul>
+        <li><a href="/login">Profile</a></li>
         <li><a href="/luxury">Luxury Cars</a></li>
         <li><a href="/sports">Sports Cars</a></li>
         <li><a href="/electric">Electric Cars</a></li>
