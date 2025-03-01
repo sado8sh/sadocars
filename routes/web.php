@@ -10,8 +10,11 @@ use App\Http\Controllers\SuvController;
 use App\Http\Controllers\ConvertiblesController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\Gate;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/luxury', [LuxuryController::class, 'index']);
 Route::get('/sports', [SportsController::class, 'index']);
 Route::get('/electric', [ElectricController::class, 'index']);
@@ -27,9 +30,14 @@ Route::get('/car/{id}', [CarController::class, 'show'])->name('car.show');
 Route::get('/cars/{id}/edit', [CarController::class, 'edit'])->name('cars.edit');
 Route::put('/cars/{id}', [CarController::class, 'update'])->name('cars.update');
 Route::delete('/cars/{id}', [CarController::class, 'destroy'])->name('cars.destroy');
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/signup', function () {
-    return view('signup');
-});
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']); 
+
+Route::get('admin/dashboard', function () {
+    return view('admin.dashboard');
+})->middleware('auth', 'admin');

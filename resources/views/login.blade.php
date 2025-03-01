@@ -16,7 +16,7 @@
             </div>
 
             <!-- Step 1: Personal Information -->
-            <form id="multi-step-form" action="" method="POST">
+            <form id="multi-step-form" action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="form-step active">
                     <h2>Personal Information</h2>
@@ -28,7 +28,7 @@
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
                     </div>
-                    <p>If you don't have an account click here 👉🏻 <a class="signin" href="/signup">Sign up</a></p>
+                    <p>If you don't have an account click here 👉🏻 <a class="signin" href="/register">Sign up</a></p>
                     <button type="submit" class="submit-button">Submit</button>
                 </div>
             </form>

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Gate;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::define('is_admin', function (User $user, Post $post) {
+            return $user->id === $post->user_id;
+        });
         // Register the admin middleware
         Route::middleware('admin', AdminMiddleware::class);
 
