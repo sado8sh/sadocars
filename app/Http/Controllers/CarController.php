@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
-    }
-
     public function create()
     {
         return view('cars.create'); // Returns the form view

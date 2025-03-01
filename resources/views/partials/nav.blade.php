@@ -11,14 +11,15 @@
         <li><a href="/convertibles">Convertibles</a></li>
     </ul>
     <ul>
+        <li><a href="/login"><i class='bx bxs-user-account'></i></a></li>
         <li><a href="/order"><i class='bx bx-shopping-bag'></i></a></li>
-        <li><span class="menu-btn">Menu</span></li>
+        <li><span class="menu-btn bx bx-menu-alt-right"></span></li>
     </ul>
     <span class="menu-btn-mobile">Menu</span>
 </nav>
 <nav class="sidebar">
     <div class="close-btn">
-        <span class="material-symbols-outlined">close</span>
+        <span class="bx bx-x"></span>
     </div>
     <ul>
         <li><a href="/luxury">Luxury Cars</a></li>
