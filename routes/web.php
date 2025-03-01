@@ -13,6 +13,8 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CardController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/luxury', [LuxuryController::class, 'index']);
@@ -41,3 +43,10 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware('auth', 'admin');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile');
+    Route::post('/profile', [ProfileController::class, 'storeProfile'])->name('profile.store');
+    Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+});

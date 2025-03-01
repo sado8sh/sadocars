@@ -1,0 +1,123 @@
+/* Profile Page Styles */
+.profile-page {
+    font-family: 'Arial', sans-serif;
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
+    margin: 0;
+    padding: 20px;
+}
+
+.profile-page .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #1a1a1a; /* Dark gray background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 223, 0, 0.5); /* Yellow shadow */
+}
+
+.profile-page h2 {
+    color: #ffdf00; /* Yellow */
+    font-size: 2em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ffdf00; /* Yellow underline */
+    padding-bottom: 5px;
+}
+
+.profile-page h4 {
+    color: #ffdf00; /* Yellow */
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.profile-page .alert-success {
+    background-color: #262626; /* Darker gray */
+    color: #ffdf00; /* Yellow */
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #ffdf00; /* Yellow border */
+}
+
+.profile-page form {
+    margin-top: 20px;
+}
+
+.profile-page .form-label {
+    color: #ffdf00; /* Yellow */
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.profile-page .form-control {
+    background-color: #262626; /* Darker gray */
+    color: #ffffff; /* White text */
+    border: 1px solid #ffdf00; /* Yellow border */
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.profile-page .form-control:focus {
+    border-color: #ffdf00; /* Yellow border on focus */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 223, 0, 0.1); /* Subtle yellow focus shadow */
+}
+
+.profile-page .btn {
+    background-color: #ffdf00; /* Yellow button background */
+    color: #000000; /* Black text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.profile-page .btn:hover {
+    background-color: #e6c200; /* Darker yellow on hover */
+}
+
+.profile-page .btn-secondary {
+    background-color: #262626; /* Dark gray background for secondary button */
+    color: #ffdf00; /* Yellow text */
+    border: 1px solid #ffdf00; /* Yellow border */
+}
+
+.profile-page .btn-secondary:hover {
+    background-color: #333333; /* Slightly lighter gray on hover */
+}
+
+.profile-page ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile-page ul li {
+    background-color: #262626; /* Darker gray background for list items */
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 6px;
+    color: #ffffff; /* White text */
+    border: 1px solid #ffdf00; /* Yellow border */
+}
+
+.profile-page ul li strong {
+    color: #ffdf00; /* Yellow for strong text */
+}
+
+.profile-page a {
+    color: #ffdf00; /* Yellow links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.profile-page a:hover {
+    color: #e6c200; /* Darker yellow on hover */
+}

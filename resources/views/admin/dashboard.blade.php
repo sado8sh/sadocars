@@ -128,8 +128,6 @@
             // Prevent default link behavior
             return false;
         }
-
-        
     </script>
 </body>
 </html>

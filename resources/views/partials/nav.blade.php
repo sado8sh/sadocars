@@ -11,7 +11,7 @@
         <li><a href="/convertibles">Convertibles</a></li>
     </ul>
     <ul>
-        <li><a href="/login"><i class='bx bxs-user-account'></i></a></li>
+        <li><a href="/profile"><i class='bx bxs-user-account'></i></a></li>
         <li><a href="/order"><i class='bx bx-shopping-bag'></i></a></li>
         <li><span class="menu-btn bx bx-menu-alt-right"></span></li>
     </ul>
