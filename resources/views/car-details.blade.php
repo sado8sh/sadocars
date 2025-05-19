@@ -20,6 +20,16 @@
         background: url('{{ Storage::url($car->main_image) }}') no-repeat center;
         background-size: cover;
     }
+    .btn-mobile-form {
+            display: block !important; /* Ensures the form container is displayed */
+        }
+
+        .btn.btn-mobile {
+             display: block !important; /* Ensures the button itself is displayed */
+             /* You might need other properties like position or z-index if it's layered incorrectly */
+             /* z-index: 9999 !important; */
+             /* position: relative !important; */
+        }
 </style>
 <body>
     <header>
@@ -53,9 +63,21 @@
                             <small>Horse Power</small>
                         </div>
                     </div>
-                    <a href="#" class="btn">Reserve Now</a>
+                    @auth
+                        <form action="{{ route('orders.store') }}" method="POST" class="btn-mobile-form">
+                            @csrf
+                            <input type="hidden" name="car_id" value="{{ $car->id }}">
+                            <button type="submit" class="btn btn-mobile">Reserve Now</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-mobile">Reserve Now</a>
+                    @endauth
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                 </div>
-                <a href="#" class="btn btn-mobile">Reserve Now</a>
                 <a href="#specs">
                     <img src="/images/arrow-down.svg" class="arrow"/>
                 </a>

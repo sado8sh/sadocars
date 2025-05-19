@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 
 class LoginController extends Controller
 {
@@ -26,10 +27,10 @@ class LoginController extends Controller
 
             // Check if the user has the admin role using Gate
             if (Gate::allows('access-admin')) {
-                return redirect()->intended('admin/dashboard');
+                return redirect('/admin/dashboard');
             }
 
-            return redirect()->intended('');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([

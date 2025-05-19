@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Car;
+use App\Models\Cars;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Card;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -28,7 +30,7 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
-        $car = Car::findOrFail($request->car_id);
+        $car = Cars::findOrFail($request->car_id);
         $cards = Auth::user()->cards;
         
         return view('orders.create', compact('car', 'cards'));
@@ -40,37 +42,20 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'car_id' => 'required|exists:cars,id',
-            'card_id' => 'required|exists:cards,id',
+            'car_id' => 'required|exists:table_cars,id',
         ]);
 
-        $car = Car::findOrFail($validated['car_id']);
-        $card = Card::findOrFail($validated['card_id']);
+        $car = Cars::findOrFail($validated['car_id']);
 
-        // Create order
-        $order = Order::create([
-            'user_id' => Auth::id(),
+        $order = \App\Models\Order::create([
+            'user_id' => auth()->id(),
             'car_id' => $car->id,
             'date' => now(),
             'price' => $car->price,
             'status' => 'pending',
         ]);
 
-        // Create payment
-        Payment::create([
-            'order_id' => $order->id,
-            'user_id' => Auth::id(),
-            'card_id' => $card->id,
-            'status' => 'pending',
-        ]);
-
-        // Here you would integrate with a payment gateway
-        // For demo purposes, we'll just mark the payment as completed
-        $order->payment->update(['status' => 'completed']);
-        $order->update(['status' => 'confirmed']);
-
-        return redirect()->route('orders.show', $order)
-            ->with('success', 'Order placed successfully.');
+        return redirect()->route('orders.show', $order);
     }
 
     /**
@@ -83,9 +68,9 @@ class OrderController extends Controller
             abort(403);
         }
 
-        $order->load(['car', 'payment', 'user']);
+        $order->load(['car', 'user']);
         
-        return view('orders.show', compact('order'));
+        return view('order', compact('order'));
     }
 
     /**
@@ -93,18 +78,44 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        // Only admins can update order status
-        if (!Auth::user()->isAdmin()) {
-            abort(403);
+        // *** Modified Authorization Check ***
+
+        // Allow if the user is an admin OR
+        // if the user is the order owner AND the status change is pending to confirmed
+        $isOrderOwnerAndConfirming = (Auth::id() === $order->user_id && $order->status === 'pending' && $request->input('status') === 'confirmed');
+
+        if (!Auth::user()->isAdmin() && !$isOrderOwnerAndConfirming) {
+            abort(403, 'You are not authorized to update this order status.');
         }
 
+        // *** Validation ***
+        // Admins can set any valid status from the list
+        // Regular users can only set 'confirmed' IF they are the owner AND it was pending
+        $allowedStatuses = Auth::user()->isAdmin()
+                            ? ['pending', 'confirmed', 'shipped', 'delivered', 'canceled']
+                            : ['confirmed']; // Regular users can only attempt to set 'confirmed'
+
         $validated = $request->validate([
-            'status' => 'required|in:pending,confirmed,shipped,delivered,canceled',
+            'status' => 'required|in:' . implode(',', $allowedStatuses),
         ]);
 
+        // *** Deletion Logic ***
+        // This logic seems misplaced in the update method.
+        // It looks like it was intended for the cancel method or should be removed.
+        // If deleting payments when status changes, move this logic.
+        /*
+        if ($order->payment && $order->payment->status === 'pending') {
+            $order->payment->update(['status' => 'failed']); // Or delete the payment?
+        }
+        */
+
+
+        // *** Update the Order Status ***
         $order->update($validated);
 
-        return redirect()->route('orders.show', $order)
+        // *** Redirect ***
+        // Redirect back to the orders index page after updating from the index view
+        return redirect()->route('orders.index')
             ->with('success', 'Order status updated successfully.');
     }
 
@@ -130,7 +141,52 @@ class OrderController extends Controller
             $order->payment->update(['status' => 'failed']);
         }
 
-        return redirect()->route('orders.show', $order)
+        return redirect()->route('orders.index') // Redirect back to index after canceling from index view
             ->with('success', 'Order canceled successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Order $order)
+    {
+        // *** Authorization Check ***
+        // Use Laravel's Gate for authorization (recommended)
+        // If you haven't defined an 'delete-order' Gate, you can use a simple check
+        // Example using Gate (requires defining 'delete-order' ability in AuthServiceProvider)
+        /*
+        if (Gate::denies('delete-order', $order)) {
+            abort(403, 'You are not authorized to delete this order.');
+        }
+        */
+
+        // Simple check: Only the order owner or admin can delete
+        if (!Auth::user()->isAdmin() && Auth::id() !== $order->user_id) {
+             abort(403, 'You are not authorized to delete this order.');
+        }
+
+        // *** Deletion Logic ***
+        // You might want to add logic here to handle related data
+        // For now, we'll just delete the order record itself.
+        // If there were associated payments, you might handle them here.
+
+        $order->delete();
+
+        // Redirect back to the orders index page with a success message
+        return redirect()->route('orders.index')
+            ->with('success', 'Order deleted successfully.');
+    }
+
+    /**
+     * Display the specified user's details for admin.
+     */
+    public function showUserDetails(User $user)
+    {
+        // The User model is already resolved by route model binding.
+        // We can ensure userInfo is loaded, though it should be from the dashboard route.
+        $user->load('userInfo');
+
+        // Return the new view for user details
+        return view('admin.user-details', compact('user'));
     }
 }

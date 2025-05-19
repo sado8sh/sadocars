@@ -15,6 +15,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\OrderController;
+use App\Models\Order;
+use App\Models\User;
+use App\Models\Cars;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/luxury', [LuxuryController::class, 'index']);
@@ -41,12 +45,30 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->na
 Route::post('/register', [RegisterController::class, 'register']); 
 
 Route::get('admin/dashboard', function () {
-    return view('admin.dashboard');
+    $orders = Order::with(['user', 'car'])->latest()->get();
+    $users = User::with('userInfo')->get();
+    $cars = Cars::all();
+
+    return view('admin.dashboard', compact('orders', 'users', 'cars'));
 })->middleware('auth', 'admin');
+
+Route::get('/admin/users/{user}', [OrderController::class, 'showUserDetails'])->name('admin.users.show')->middleware('auth', 'admin');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile');
     Route::post('/profile', [ProfileController::class, 'storeProfile'])->name('profile.store');
     Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+});
+
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index')->middleware('auth');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show')->middleware('auth');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store')->middleware('auth');
+Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy')->middleware('auth');
+Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update')->middleware('auth');
+
+// Admin User Management Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::delete('/admin/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
+    Route::get('/admin/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.users.show');
 });

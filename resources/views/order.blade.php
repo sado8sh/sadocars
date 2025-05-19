@@ -148,11 +148,11 @@
             <h2>Your Order</h2>
             <div class="order-summary">
                 <div class="order-item">
-                    <img src="images/sport.jpg" alt="Car Model" class="order-image">
+                    <img src="{{ Storage::url($order->car->main_image ?? 'images/default-car.jpg') }}" alt="{{ $order->car->brand ?? 'Car' }} {{ $order->car->model ?? 'Model' }}" class="order-image">
                     <div class="order-info">
-                        <h3>2023 Sports Sedan</h3>
-                        <p><strong>Color:</strong> Midnight Black</p>
-                        <p><strong>Price:</strong> $45,000</p>
+                        <h3>{{ $order->car->brand ?? 'N/A' }} {{ $order->car->model ?? 'N/A' }}</h3>
+                        <p><strong>Category:</strong> {{ $order->car->category }}</p>
+                        <p><strong>Price:</strong> ${{ number_format($order->price, 2) ?? 'N/A' }}</p>
                         <p><strong>Delivery Date:</strong> October 25, 2023</p>
                     </div>
                 </div>
@@ -161,17 +161,22 @@
 
         <div class="customer-details">
             <h2>Customer Information</h2>
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Email:</strong> johndoe@example.com</p>
-            <p><strong>Phone:</strong> +1 (123) 456-7890</p>
-            <p><strong>Shipping Address:</strong> 123 Main St, City, Country</p>
+            <p><strong>Name:</strong> {{ $order->user->userInfo->first_name ?? $order->user->name ?? 'N/A' }} {{ $order->user->userInfo->last_name ?? '' }}</p>
+            <p><strong>Email:</strong> {{ $order->user->email ?? 'N/A' }}</p>
+            <p><strong>Phone:</strong> {{ $order->user->userInfo->phone ?? 'N/A' }}</p>
+            <p><strong>Shipping Address:</strong> 
+                 {{ $order->user->userInfo->address ?? 'N/A' }}, 
+                 {{ $order->user->userInfo->city ?? '' }}, 
+                 {{ $order->user->userInfo->state ?? '' }}, 
+                 {{ $order->user->userInfo->zip ?? '' }}
+            </p>
         </div>
 
         <div class="payment-details">
             <h2>Payment Information</h2>
             <p><strong>Payment Method:</strong> Credit Card (**** **** **** 1234)</p>
-            <p><strong>Total Amount:</strong> $45,000</p>
-            <p><strong>Payment Status:</strong> Completed</p>
+            <p><strong>Total Amount:</strong> ${{ number_format($order->price, 2) ?? 'N/A' }}</p>
+            <p><strong>Payment Status:</strong> Pending</p>
         </div>
 
         <div class="confirmation-footer">

@@ -12,7 +12,7 @@
     </ul>
     <ul>
         <li><a href="/profile"><i class='bx bxs-user-account'></i></a></li>
-        <li><a href="/order"><i class='bx bx-shopping-bag'></i></a></li>
+        <li><a href="/orders"><i class='bx bx-shopping-bag'></i></a></li>
         <li><span class="menu-btn bx bx-menu-alt-right"></span></li>
     </ul>
     <span class="menu-btn-mobile">Menu</span>

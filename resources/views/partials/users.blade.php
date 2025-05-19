@@ -96,24 +96,44 @@ tbody tr:nth-child(even) {
     }
 }
 </style>
-<?php $users = DB::table('users')->get(); ?>
-<table>
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Informations</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($users as $user)
+
+{{-- Removed direct DB query: <?php $users = DB::table('users')->get(); ?> --}}
+{{-- The $users variable is passed from the admin/dashboard route closure --}}
+
+@if(isset($users) && $users->count() > 0)
+    <table>
+        <thead>
             <tr>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->role }}</td>
-                @if ($user->role === 'user')
-                    <td><button>Take a look</button></td>
-                @endif
+                <th>Email</th>
+                <th>Role</th>
+                {{-- *** Added new column headers *** --}}
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                {{-- Removed the "Actions" header: <th>Actions</th> --}}
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+                <tr>
+                    <td data-label="Email">{{ $user->email }}</td>
+                    <td data-label="Role">{{ $user->role ?? 'N/A' }}</td>
+                    {{-- *** Added new data cells for user info *** --}}
+                    <td data-label="First Name">{{ $user->userInfo->first_name ?? 'N/A' }}</td>
+                    <td data-label="Last Name">{{ $user->userInfo->last_name ?? 'N/A' }}</td>
+                    <td data-label="Phone">{{ $user->userInfo->phone ?? 'Not provided' }}</td>
+                    {{-- Removed the "Actions" data cell: --}}
+                    {{-- <td data-label="Actions">
+                        @if ($user->role === 'user')
+                             <a href="{{ route('admin.users.show', $user) }}" class="link-take-a-look">
+                                Take a look
+                            </a>
+                        @endif
+                    </td> --}}
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@else
+     <p style="color: #cccccc; text-align: center; width: 100%;">No users found.</p>
+@endif

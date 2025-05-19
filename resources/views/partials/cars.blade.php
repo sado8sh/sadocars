@@ -1,172 +1,205 @@
 <style>
-    /* General Styling */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
+    .cars-container {
         padding: 20px;
-        background-color: #1a1a1a; /* Dark background */
-        color: #e6e6e6; /* Light text for contrast */
+        background: #1a1d21;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    
-    h1 {
-        color: #ffcc00; /* Yellow heading */
-    }
-    
-    .btn-add {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #ffcc00; /* Yellow button */
-        color: #1a1a1a; /* Dark text */
-        text-decoration: none;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-    }
-    
-    .btn-add:hover {
-        background-color: #e6b800; /* Darker yellow on hover */
-    }
-    
-    /* Carousel Container */
-    .carousel-container {
+
+    .cars-header {
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        position: relative;
-        overflow: hidden;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #2d3238;
     }
-    
-    /* Cards Container */
-    .cards-container {
-        display: flex;
-        overflow-x: auto;
-        scroll-behavior: smooth;
+
+    .cars-title {
+        font-size: 1.5rem;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .btn-add {
+        background: #27ae60;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-add:hover {
+        background: #219a52;
+    }
+
+    .cars-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
-        padding: 20px 0;
-        width: 80%;
-        margin: 0 auto;
+        margin-top: 20px;
     }
-    
-    /* Individual Card Styling */
-    .card {
-        flex: 0 0 auto;
-        width: 300px;
-        background-color: #333; /* Dark card background */
+
+    .car-card {
+        background: #2d3238;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         overflow: hidden;
-        transition: transform 0.3s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid #3a3f45;
     }
-    
-    .card:hover {
+
+    .car-card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
-    
-    .card-image {
+
+    .car-image {
         width: 100%;
         height: 200px;
         object-fit: cover;
+        border-bottom: 1px solid #3a3f45;
     }
-    
-    .card-content {
-        padding: 15px;
+
+    .car-content {
+        padding: 20px;
     }
-    
-    .card-content h2 {
-        margin: 0 0 10px;
-        font-size: 1.5em;
-        color: #ffcc00; /* Yellow heading */
+
+    .car-title {
+        font-size: 1.2rem;
+        color: #fff;
+        margin: 0 0 10px 0;
+        font-weight: 600;
     }
-    
-    .card-content p {
-        margin: 5px 0;
-        color: #e6e6e6; /* Light text */
+
+    .car-details {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 15px;
     }
-    
-    .btn-update {
-        display: inline-block;
+
+    .car-detail {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .detail-label {
+        color: #8b8f94;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .detail-value {
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .car-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .btn-view {
+        background: #3498db;
+        color: #fff;
         padding: 8px 16px;
-        background-color: #ffcc00; /* Yellow button */
-        color: #1a1a1a; /* Dark text */
+        border-radius: 6px;
         text-decoration: none;
-        border-radius: 5px;
-        margin-top: 10px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
+        font-size: 0.9rem;
+        transition: background 0.2s ease;
+        flex: 1;
+        text-align: center;
     }
-    
+
+    .btn-view:hover {
+        background: #2980b9;
+    }
+
+    .btn-update {
+        background: #f1c40f;
+        color: #2c3e50;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background 0.2s ease;
+        flex: 1;
+        text-align: center;
+    }
+
     .btn-update:hover {
-        background-color: #e6b800; /* Darker yellow on hover */
+        background: #f39c12;
     }
-    
-    /* Navigation Buttons */
-    .nav-button {
-        background-color: rgba(255, 204, 0, 0.8); /* Semi-transparent yellow */
-        color: #1a1a1a; /* Dark text */
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        border-radius: 50%;
-        font-size: 1.5em;
-        z-index: 1;
-        transition: background-color 0.3s ease;
+
+    .no-cars {
+        text-align: center;
+        padding: 40px;
+        background: #2d3238;
+        border-radius: 10px;
+        color: #8b8f94;
+        font-size: 1.1rem;
     }
-    
-    .nav-button:hover {
-        background-color: rgba(255, 204, 0, 1); /* Solid yellow on hover */
+
+    @media (max-width: 768px) {
+        .cars-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .car-card {
+            max-width: 100%;
+        }
     }
-    
-    .prev-button {
-        position: absolute;
-        left: 10px;
-    }
-    
-    .next-button {
-        position: absolute;
-        right: 10px;
-    }
-    </style>
-    <a href="/cars/create" class="btn-add">Add a Car</a>
-    
-    <div class="carousel-container">
-        <button class="nav-button prev-button">&lt;</button>
-        <div class="cards-container">
-            <?php $cars = DB::table('table_cars')->get(); ?>
-            @foreach ($cars as $car)
-            <a href="{{ route('car.show', ['id' => $car->id]) }}" class="card-link">
-                <div class="card">
-                    <img src="{{ Storage::url($car->main_image) }}" alt="{{ $car->brand }} {{ $car->model }}" class="card-image">
-                    <div class="card-content">
-                        <h2>{{ $car->brand }} {{ $car->model }}</h2>
-                        <p>Category: {{ $car->category }}</p>
-                        <p>Price: ${{ $car->price }}</p>
-                        <a href="/cars/{{$car->id}}/edit" class="btn-update">Update the Car</a>
+</style>
+
+<div class="cars-container">
+    <div class="cars-header">
+        <h2 class="cars-title">Cars Management</h2>
+        <a href="/cars/create" class="btn-add">
+            <i class="fas fa-plus"></i> Add New Car
+        </a>
+    </div>
+
+    @if($cars->isEmpty())
+        <div class="no-cars">
+            <p>No cars found.</p>
+        </div>
+    @else
+        <div class="cars-grid">
+            @foreach($cars as $car)
+                <div class="car-card">
+                    <img src="{{ Storage::url($car->main_image) }}" 
+                         alt="{{ $car->brand }} {{ $car->model }}" 
+                         class="car-image">
+
+                    <div class="car-content">
+                        <h3 class="car-title">{{ $car->brand }} {{ $car->model }}</h3>
+                        
+                        <div class="car-details">
+                            <div class="car-detail">
+                                <span class="detail-label">Category</span>
+                                <span class="detail-value">{{ $car->category }}</span>
+                            </div>
+                            <div class="car-detail">
+                                <span class="detail-label">Price</span>
+                                <span class="detail-value">${{ number_format($car->price, 2) }}</span>
+                            </div>
+                        </div>
+
+                        <div class="car-actions">
+                            <a href="{{ route('car.show', ['id' => $car->id]) }}" class="btn-view">View Details</a>
+                            <a href="/cars/{{$car->id}}/edit" class="btn-update">Update</a>
+                        </div>
                     </div>
                 </div>
-            </a>
             @endforeach
         </div>
-        <button class="nav-button next-button">&gt;</button>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const cardsContainer = document.querySelector('.cards-container');
-        const prevButton = document.querySelector('.prev-button');
-        const nextButton = document.querySelector('.next-button');
-    
-        prevButton.addEventListener('click', () => {
-            cardsContainer.scrollBy({
-                left: -300, // Adjust this value based on card width + gap
-                behavior: 'smooth'
-            });
-        });
-    
-        nextButton.addEventListener('click', () => {
-            cardsContainer.scrollBy({
-                left: 300, // Adjust this value based on card width + gap
-                behavior: 'smooth'
-            });
-        });
-    });
-    </script>
+    @endif
+</div>
